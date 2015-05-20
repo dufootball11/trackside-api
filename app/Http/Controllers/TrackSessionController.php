@@ -14,8 +14,8 @@ class TrackSessionController extends Controller {
 	 */
 	public function index()
 	{
-		// return var_dump(\App\TrackSession::first()->tirePressures());
-		return response()->json(\App\TrackSession::first()->tirePressures()->where('hot','=', 0)->get(), 200);
+		$sessions = \App\TrackSession::all();
+		return response()->json($sessions->toArray(), 200);
 	}
 
 	/**
@@ -36,6 +36,7 @@ class TrackSessionController extends Controller {
 	public function store()
 	{
 		//
+		dd('store');
 	}
 
 	/**
@@ -47,6 +48,15 @@ class TrackSessionController extends Controller {
 	public function show($id)
 	{
 		//
+		$session = \App\TrackSession::find($id);
+
+		if ( ! $session )
+		{
+			return response()->json(['error' => ['message' => 'Track Session does not exist']], 404);
+		}
+
+		return response()->json($session->toArray(), 200);
+
 	}
 
 	/**
